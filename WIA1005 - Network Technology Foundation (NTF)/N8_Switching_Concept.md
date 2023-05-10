@@ -31,8 +31,6 @@
 
 ## 1.4 Switching Forwarding Methods
 
-
-
 ### 1.4.1 Store and Forward Switching
 
 * Store-and-forward switching makes a forwarding decision after receiving the entire frame and checking it for errors using CRC (Cyclic Redundancy Check).
@@ -54,3 +52,40 @@
 * Fragment free switching is a modified form of cut-through switching that provides better error checking without a significant increase in latency.
 * Cut-through switching is more suitable for high-performance computing (HPC) applications with low latency requirements.
 * If there is a high error rate in the network, cut-through switching can negatively impact bandwidth by forwarding damaged and invalid frames.
+
+## 2.1 Collision Domain
+
+* In legacy hub-based Ethernet segments, devices competed for the shared medium, causing collisions.
+* Segments that share the same bandwidth are known as collision domains.
+* Half-duplex segments are in their own collision domain, while full-duplex segments have no collisions.
+* Switch ports will autonegotiate full-duplex when the adjacent device can also operate in full-duplex, otherwise, they will operate in half-duplex.
+* In half-duplex mode, switch ports are part of a collision domain.
+* Full-duplex is chosen if both devices have the capability along with their highest common bandwidth.
+
+## 2.2 Broadcast Domain
+
+* A collection of interconnected switches forms a single broadcast domain, which is known as the MAC broadcast domain.
+* Routers can divide a Layer 2 broadcast domain and are used to segment broadcast domains.
+* A Layer 2 broadcast is sent to all devices in the MAC broadcast domain (Layer 2 broadcast domain) and has a destination MAC address of all binary ones.
+* When a switch receives a broadcast frame, switches forward the frames out each of their ports, except the ingress port where the broadcast frame was received.
+* Each device connected to the switch receives a copy of the broadcast frame and processes it.
+* Broadcasts are necessary for locating devices and network services, but too many can cause congestion and slow down network performance.
+
+* When two switches are connected together, the broadcast domain is increased, and the broadcast frame is propagated to all devices connected to both switches.
+
+## 2.3 Alleviate Network Congestion
+
+* Interconnected switch ports attempt to establish a link in full-duplex, eliminating collision domains and providing the full bandwidth to connected devices.
+
+* **Fast port speeds**
+  * Ethernet switch port speeds vary by model and purpose
+  * Cost more but can reduce congestion.
+* **Fast Internal Switching**
+  * Switches use fast internal bus or shared memory to provide high performance.
+* **Large memory buffers**
+  * Switches use large memory buffers to temporarily store more received frames before having to start dropping them.
+  * Hence, switches are able to forward ingress traffic from faster ports to slower egress ports without losing frames.
+* **High port density switches**
+  * Lower overall costs
+  * Reduce the number of switches required
+  * Help keep traffic local to alleviate congestion
