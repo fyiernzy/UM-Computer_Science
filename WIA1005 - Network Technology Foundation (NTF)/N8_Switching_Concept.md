@@ -31,7 +31,26 @@
 
 ## 1.4 Switching Forwarding Methods
 
-* Switches make fast Layer 2 forwarding decisions using software on application-specific-integrated circuits (ASICs).
-* Two methods are used to switch frames: Store-and-forward switching and Cut-through switching.
-* Store-and-forward switching makes a forwarding decision after receiving the entire frame and checking it for errors using CRC.
-* Cut-through switching begins the forwarding process after determining the destination MAC address and egress port.
+
+
+### 1.4.1 Store and Forward Switching
+
+* Store-and-forward switching makes a forwarding decision after receiving the entire frame and checking it for errors using CRC (Cyclic Redundancy Check).
+
+* **Error checking**
+  * Error checking compares the frame check sequence (FCS) value in the last field of the datagram to ensure the frame is error-free
+  * If the frame is error-free, the switch forwards the frame; otherwise, it drops the frame
+
+* **Automatic buffering**
+  * Automatic buffering is used to support any mix of Ethernet speeds
+  * Store-and-forward switches store the entire frame in a buffer if there is a mismatch in speeds between the ingress and egress ports
+  * The switch computes the FCS check, forwards it to the egress port buffer, and then sends it.
+
+### 1.4.2 Cut-through switching
+
+* Store-and-forward switching drops frames that fail the FCS check and does not forward invalid frames.
+* Cut-through switching can forward invalid frames but has lower latency and faster forwarding decisions.
+* This is because cut-through switching begins the forwarding process after determining the destination MAC address and egress port without performing FCS.
+* Fragment free switching is a modified form of cut-through switching that provides better error checking without a significant increase in latency.
+* Cut-through switching is more suitable for high-performance computing (HPC) applications with low latency requirements.
+* If there is a high error rate in the network, cut-through switching can negatively impact bandwidth by forwarding damaged and invalid frames.
